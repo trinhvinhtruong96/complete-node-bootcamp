@@ -54,9 +54,13 @@ reviewSchema.pre(/^find/, function(next) {
 
 reviewSchema.statics.calcAverageRatings = async function(tourId) {
   const stats = await this.aggregate([
+    // get review filter by tour id
     {
       $match: { tour: tourId }
     },
+    // get the reviews filter result and group that reviews by tour
+    // each tour have 1 nRating, with $sum -> 4 review -> 4 nRating
+    // avgRating: average of rating value
     {
       $group: {
         _id: '$tour',
