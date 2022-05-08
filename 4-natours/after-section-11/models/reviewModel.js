@@ -99,6 +99,8 @@ reviewSchema.pre(/^findOneAnd/, async function(next) {
 
 reviewSchema.post(/^findOneAnd/, async function() {
   // await this.findOne(); does NOT work here, query has already executed
+  // the reason why not call this.constructor.calcAverageRatings(this.tour); is the current comment already updated or deleted at this point
+  // Call old review model but it data is updated when post
   await this.r.constructor.calcAverageRatings(this.r.tour);
 });
 
